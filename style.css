@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 20px;
+}
+
+.dark {
+    background: #111;
+    color: #fff;
+}
+
+li {
+    margin: 8px 0;
+}
+
+.btn-remover {
+    margin-left: 10px;
+}
