@@ -18,32 +18,32 @@ btnMudarTitulo.addEventListener("click", () => {
 });
 
 // 4) Criar elementos: adicionar itens na lista
-btnAdd.addEventListener("click", () => {
-    const texto = inputTarefa.value.trim();
+// btnAdd.addEventListener("click", () => {
+//     const texto = inputTarefa.value.trim();
 
-    if (texto === "") {
-        alert("Digite uma tarefa!");
-        return;
-    }
+//     if (texto === "") {
+//         alert("Digite uma tarefa!");
+//         return;
+//     }
 
-    const li = document.createElement("li");
-    li.textContent = texto;
+//     const li = document.createElement("li");
+//     li.textContent = texto;
 
-    // Botão de remover
-    const btnRemover = document.createElement("button");
-    btnRemover.textContent = "Remover";
-    btnRemover.classList.add("btn-remover");
+//     // Botão de remover
+//     const btnRemover = document.createElement("button");
+//     btnRemover.textContent = "Remover";
+//     btnRemover.classList.add("btn-remover");
 
-    btnRemover.addEventListener("click", () => {
-        li.remove();
-    });
+//     btnRemover.addEventListener("click", () => {
+//         li.remove();
+//     });
 
-    li.appendChild(btnRemover);
-    lista.appendChild(li);
+//     li.appendChild(btnRemover);
+//     lista.appendChild(li);
 
-    inputTarefa.value = "";
-    inputTarefa.focus();
-});
+//     inputTarefa.value = "";
+//     inputTarefa.focus();
+// });
 
 // Quando clicar no botão
 btnAdd.addEventListener("click", adicionarTarefa);
