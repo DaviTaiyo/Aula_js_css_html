@@ -83,7 +83,6 @@ app.get("/usuarios", async (req, res) => {
     }
 });
 
-
 /**********************************************************************
  * INICIAR SERVIDOR
  * -------------------------------------------------
@@ -92,3 +91,153 @@ app.get("/usuarios", async (req, res) => {
 app.listen(3000, () => 
     console.log("API esta rodando em http://localhost:3000")
 );
+
+/**********************************************************************
+ * BUSCAR USUÁRIO POR ID
+ * -------------------------------------------------
+ * Método: GET
+ * URL: http://localhost:3000/usuarios/:id
+ * Exemplo: http://localhost:3000/usuarios/3
+ * Objetivo: Buscar um único usuário pelo ID
+ **********************************************************************/
+
+app.get("/usuarios/:id", async (req, res) => {
+    try {
+        /*
+        * req.params.id
+        *captura o parâmetro que vem na URL.
+        * Se a url for /usuario/2
+        * então req.params.id será 2
+        */
+       const { id } = req.params
+       /*
+       * Executa a consulta SQL usando parâmetro ?
+       * Isso evita SQL injection (boa prática de segurança)
+       * O segundo argumento [id] substitui o ?
+       */ 
+      const [rows] = await db.query("SELECT * FROM usuario where id = ?;", [id]);
+      /*
+      *Se não encontrar nenhum registro rows será um array vazio.
+      */
+     if (rows.length === 0) {
+        return res.status(404).json({
+            erro: "USUARIO NÃO ENCONTRADO"
+        });
+    }
+    /*
+    * Se encontrou, retorna o primeiro registro.
+    *(porque estamos buscando por ID, que é único)
+    */
+   res.json(rows[0]);
+    } catch (err) {
+        /*
+        * Caso ocorra erro no servidor ou banco.
+        */
+        res.status(500).json({
+            erro: "Erro ao buscar usuario",
+            detalhe: err.message
+        })
+    } 
+});
+
+/**********************************************************************
+ * CRIAR NOVO USUÁRIO
+ * -------------------------------------------------
+ * Método: POST
+ * URL: http://localhost:3000/usuarios
+ * Objetivo: Inserir um novo usuário no banco
+ **********************************************************************/
+app.post("/usuarios", async (req, res) => {
+    try {
+        const {nome, numero} = req.body;
+
+        if (!nome || !numero) {
+            return res.status(400).json({
+                erro: "nome e ou numero são obrigatórios"
+            });
+        }
+
+        const [result] = await db.query("insert into usuario (nome, numero) (?, ?):",
+             [nome, numero]);
+
+        res.status(201).json({
+            mensagem: "Usuario criado com sucesso",
+            id: result.insertId
+        });
+    } catch (err) {
+        res.status(500).json({
+            erro: "Erro ao inserir usuarios",
+            detalhe: err.message
+        })
+    }
+})
+
+/**********************************************************************
+ * DELETAR USUÁRIO POR ID
+ * -------------------------------------------------
+ * Método: DELETE
+ * URL: http://localhost:3000/usuarios/:id
+ * Exemplo: http://localhost:3000/usuarios/3
+ * Objetivo: Remover um usuário do banco
+ **********************************************************************/
+
+app.put("/usuarios/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const {nome, sobrenome} = req.body;
+
+        if (!nome || !sobrenome) {
+            return res.status(400).json({
+                erro: "Nome e sobrenome são obrigatórios para atualizar"
+            });
+        }
+
+        const [result] = await db.query("UPDATE usuario SET nome = ? email = ? id = ?;",
+            [nome, sobrenome, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                erro: "Usuario não encontrado para atualizar"
+            });
+        }
+        res.json({
+            mensage: "usuario atualizado com sucesso"
+        });
+    } catch (err) {
+        res.status(500).json({
+            erro: "Erro ao atualizar usuario",
+            detalhe: err.mensage
+        });
+    }
+});
+/**********************************************************************
+ * DELETAR USUÁRIO POR ID
+ * -------------------------------------------------
+ * Método: DELETE
+ * URL: http://localhost:3000/usuarios/:id
+ * Exemplo: http://localhost:3000/usuarios/3
+ * Objetivo: Remover um usuário do banco
+ **********************************************************************/
+app.delete("usuarios/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const [result] = await db.query("Delete from usuario where id = ?", [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                erro: "Usuario nao encontrado para deletar"
+            });
+        }
+
+        res.json({
+            mensage: "Usuario Deletado com sucesso"
+        });
+    } catch (err) {
+        res.status(500).json({
+            erro: "erro ao deletar usuario",
+            detalhe: err.message
+        })
+    }
+})
