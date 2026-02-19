@@ -149,14 +149,25 @@ app.get("/usuarios/:id", async (req, res) => {
  **********************************************************************/
 app.post("/usuarios", async (req, res) => {
     try {
+         /*
+         * Captura os dados enviados no corpo da requisição.
+         * Isso só funciona porque usamos:
+         * app.use(express.json());
+         */
         const {nome, numero} = req.body;
-
+        /*
+         * Validação simples:
+         * Verifica se os campos obrigatórios foram enviados.
+         */
         if (!nome || !numero) {
             return res.status(400).json({
                 erro: "nome e ou numero são obrigatórios"
             });
         }
-
+        /*
+         * Executa o INSERT no banco.
+         * Usamos ? para evitar SQL Injection.
+         */
         const [result] = await db.query("insert into usuario (nome, numero) (?, ?):",
              [nome, numero]);
 
@@ -165,6 +176,10 @@ app.post("/usuarios", async (req, res) => {
             id: result.insertId
         });
     } catch (err) {
+        /*
+         * result.insertId
+         * Retorna o ID do registro recém-criado.
+         */
         res.status(500).json({
             erro: "Erro ao inserir usuarios",
             detalhe: err.message
@@ -183,24 +198,44 @@ app.post("/usuarios", async (req, res) => {
 
 app.put("/usuarios/:id", async (req, res) => {
     try {
+        /*
+         * Captura o ID enviado na rota (URL)
+         * Ex: /usuarios/3  -> id = 3
+         */
         const { id } = req.params;
+        /*
+         * Captura os dados enviados no corpo (JSON)
+         * Ex: { "nome": "...", "email": "..." }
+         */
         const {nome, sobrenome} = req.body;
-
+         /*
+         * Validação simples:
+         * Para atualizar, o ideal é exigir os campos obrigatórios.
+         */
         if (!nome || !sobrenome) {
             return res.status(400).json({
                 erro: "Nome e sobrenome são obrigatórios para atualizar"
             });
         }
-
+        /*
+         * Executa o UPDATE no banco.
+         * Usamos ? para evitar SQL Injection.
+         * A ordem dos valores no array precisa bater com os ? da query.
+         */
         const [result] = await db.query("UPDATE usuario SET nome = ? email = ? id = ?;",
             [nome, sobrenome, id]
         );
-
+        /*
+         * result.affectedRows
+         * Diz quantas linhas foram afetadas pela operação.
+         * Se for 0, significa que não existia usuário com esse ID.
+         */
         if (result.affectedRows === 0) {
             return res.status(404).json({
                 erro: "Usuario não encontrado para atualizar"
             });
         }
+        // Se deu certo, retorna uma mensagem de sucesso
         res.json({
             mensage: "usuario atualizado com sucesso"
         });
@@ -221,16 +256,24 @@ app.put("/usuarios/:id", async (req, res) => {
  **********************************************************************/
 app.delete("usuarios/:id", async (req, res) => {
     try {
+        /*
+         * Captura o ID enviado pela rota
+         */
         const { id } = req.params;
-
+        /*
+         * Executa o DELETE no banco.
+         * Usamos ? para evitar SQL Injection.
+         */
         const [result] = await db.query("Delete from usuario where id = ?", [id]);
-
+        /*
+         * Se affectedRows for 0, não existia usuário com esse ID
+         */
         if (result.affectedRows === 0) {
             return res.status(404).json({
                 erro: "Usuario nao encontrado para deletar"
             });
         }
-
+        // Se deu certo, confirma a remoção
         res.json({
             mensage: "Usuario Deletado com sucesso"
         });
