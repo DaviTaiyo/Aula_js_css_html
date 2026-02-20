@@ -188,14 +188,13 @@ app.post("/usuarios", async (req, res) => {
 })
 
 /**********************************************************************
- * DELETAR USUÁRIO POR ID
+ * ATUALIZAR USUÁRIO POR ID
  * -------------------------------------------------
- * Método: DELETE
+ * Método: PUT
  * URL: http://localhost:3000/usuarios/:id
  * Exemplo: http://localhost:3000/usuarios/3
- * Objetivo: Remover um usuário do banco
+ * Objetivo: Atualizar dados de um usuário existente
  **********************************************************************/
-
 app.put("/usuarios/:id", async (req, res) => {
     try {
         /*
@@ -205,10 +204,10 @@ app.put("/usuarios/:id", async (req, res) => {
         const { id } = req.params;
         /*
          * Captura os dados enviados no corpo (JSON)
-         * Ex: { "nome": "...", "email": "..." }
+         * Ex: { "nome": "...", "numero": "..." }
          */
         const {nome, sobrenome} = req.body;
-         /*
+          /*
          * Validação simples:
          * Para atualizar, o ideal é exigir os campos obrigatórios.
          */
@@ -217,7 +216,7 @@ app.put("/usuarios/:id", async (req, res) => {
                 erro: "Nome e sobrenome são obrigatórios para atualizar"
             });
         }
-        /*
+         /*
          * Executa o UPDATE no banco.
          * Usamos ? para evitar SQL Injection.
          * A ordem dos valores no array precisa bater com os ? da query.
@@ -225,7 +224,7 @@ app.put("/usuarios/:id", async (req, res) => {
         const [result] = await db.query("UPDATE usuario SET nome = ? email = ? id = ?;",
             [nome, sobrenome, id]
         );
-        /*
+         /*
          * result.affectedRows
          * Diz quantas linhas foram afetadas pela operação.
          * Se for 0, significa que não existia usuário com esse ID.

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Usuários</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CRUD Usuários</h1>
+            <p>Consumindo API express em localHost 3000</p>
+            <div id="status" class="status">Verificando API...</div>
+        </header>
+
+        <section class="card">
+            <h2>Dados do Usuário</h2>
+
+            <input id="id" type="number" placeholder="ID">
+            <input id="nome" type="text" placeholder="Nome">
+            <input id="sobrenome" type="text" placeholder="Sobrenome">
+            <input id="numero" type="text" placeholder="Numero">
+                <div class="buttons">
+                    <button onclick="health()">Health</button>
+                    <button onclick="listar()">Listar</button>
+                    <button onclick="buscar()">Buscar</button>
+                    <button onclick="inserir()">Inserir</button>
+                    <button onclick="atualizar()">Atualizar</button>
+                    <button onclick="deletar()">Deletar</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Resultado</h2>
+            <pre id="output"></pre>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
