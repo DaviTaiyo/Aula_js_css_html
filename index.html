@@ -1,26 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mexendo no Visual</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula de HTML, CSS e JavaScript</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id="titulo">Minha Página</h1>
+  <main class="layout">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="badge">HTML + CSS + JavaScript</span>
+        <h1 id="titulo">Projeto de Aula Finalizado</h1>
+        <p id="descricao">
+          Uma vitrine simples para demonstrar manipulacao do DOM, alteracao de tema,
+          lista de tarefas com persistencia local e integracao com uma API CRUD em Node.js.
+        </p>
+        <div class="hero-actions">
+          <button id="btnTema" type="button">Alternar tema</button>
+          <button id="btnMudarTitulo" type="button">Destacar titulo</button>
+          <a class="link-button" href="./Frontend/index.html">Abrir painel CRUD</a>
+        </div>
+      </div>
 
-    <button id="btnTema">Alternar o Tema</button>
-    <button id="btnMudarTitulo"> Mudar o titulo</button>
-    <br/>
+      <div class="hero-card">
+        <h2>Status da API</h2>
+        <p>Use o botao abaixo para testar a rota principal do backend local.</p>
+        <button id="consumo-da-api" type="button">Consumir API</button>
+        <pre id="apiResultado">Nenhuma consulta executada.</pre>
+      </div>
+    </section>
 
-    <h2>Lista de Tarefas</h2>
-    <input id="inputTarefa" placeholder="Digite uma Tarefa"/>
-    <button id="btnAdd">Adicionar</button>
+    <section class="todo-card">
+      <div class="section-title">
+        <div>
+          <span class="kicker">Pratica de DOM</span>
+          <h2>Lista de tarefas</h2>
+        </div>
+        <p id="contadorTarefas">0 tarefas cadastradas</p>
+      </div>
 
-    <ul id="lista"></ul>
+      <div class="task-form">
+        <input id="inputTarefa" type="text" placeholder="Digite uma nova tarefa">
+        <button id="btnAdd" type="button">Adicionar</button>
+      </div>
 
-    <button id="consumo-da-api">Consumir API</button>
+      <ul id="lista" class="task-list"></ul>
+    </section>
+  </main>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

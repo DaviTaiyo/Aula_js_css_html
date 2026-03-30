@@ -1,41 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Usuários</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel CRUD de Usuarios</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>CRUD Usuários</h1>
-            <p>Consumindo API express em localHost 3000</p>
-            <div id="status" class="status">Verificando API...</div>
-        </header>
+  <div class="page-shell">
+    <header class="hero">
+      <span class="eyebrow">Projeto Finalizado</span>
+      <h1>Painel CRUD de Usuarios</h1>
+      <p>Interface para testar a API Express local com operacoes de consulta, cadastro, edicao e remocao.</p>
+      <div id="status" class="status status-waiting">Verificando API...</div>
+    </header>
 
-        <section class="card">
-            <h2>Dados do Usuário</h2>
+    <main class="grid">
+      <section class="card">
+        <h2>Formulario</h2>
+        <div class="field-grid">
+          <label>
+            <span>ID</span>
+            <input id="id" type="number" placeholder="Ex.: 1">
+          </label>
+          <label>
+            <span>Nome</span>
+            <input id="nome" type="text" placeholder="Digite o nome">
+          </label>
+          <label>
+            <span>Sobrenome</span>
+            <input id="sobrenome" type="text" placeholder="Digite o sobrenome">
+          </label>
+          <label>
+            <span>Numero</span>
+            <input id="numero" type="text" placeholder="Digite o numero">
+          </label>
+        </div>
 
-            <input id="id" type="number" placeholder="ID">
-            <input id="nome" type="text" placeholder="Nome">
-            <input id="sobrenome" type="text" placeholder="Sobrenome">
-            <input id="numero" type="text" placeholder="Numero">
-                <div class="buttons">
-                    <button onclick="health()">Health</button>
-                    <button onclick="listar()">Listar</button>
-                    <button onclick="buscar()">Buscar</button>
-                    <button onclick="inserir()">Inserir</button>
-                    <button onclick="atualizar()">Atualizar</button>
-                    <button onclick="deletar()">Deletar</button>
-            </div>
-        </section>
+        <div class="buttons">
+          <button data-action="health">Health</button>
+          <button data-action="listar">Listar</button>
+          <button data-action="buscar">Buscar</button>
+          <button data-action="inserir">Inserir</button>
+          <button data-action="atualizar">Atualizar</button>
+          <button class="danger" data-action="deletar">Deletar</button>
+        </div>
+      </section>
 
-        <section class="card">
-            <h2>Resultado</h2>
-            <pre id="output"></pre>
-        </section>
-    </div>
-    <script src="script.js"></script>
+      <section class="card">
+        <div class="result-header">
+          <h2>Resultado</h2>
+          <button class="secondary" data-action="limpar">Limpar saida</button>
+        </div>
+        <pre id="output">Nenhuma operacao executada ainda.</pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

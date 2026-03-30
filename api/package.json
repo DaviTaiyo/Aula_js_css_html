@@ -1,15 +1,21 @@
 {
-  "name": "api",
+  "name": "crud-usuarios-api",
   "version": "1.0.0",
+  "description": "API Express + MySQL para o projeto de aula de HTML, CSS e JavaScript.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "check": "node --check index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "express",
+    "mysql",
+    "crud",
+    "javascript"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",

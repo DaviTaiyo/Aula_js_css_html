@@ -1,17 +1,233 @@
+:root {
+  --bg: #fcfbf7;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-strong: #ffffff;
+  --text: #1d2939;
+  --muted: #526071;
+  --accent: #e76f51;
+  --accent-dark: #cb5b40;
+  --line: rgba(29, 41, 57, 0.1);
+  --shadow: 0 24px 50px rgba(76, 56, 38, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 20px;
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(231, 111, 81, 0.16), transparent 22%),
+    radial-gradient(circle at bottom right, rgba(42, 157, 143, 0.14), transparent 20%),
+    linear-gradient(180deg, #fffaf3 0%, #f6efe4 100%);
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
-.dark {
-    background: #111;
-    color: #fff;
+body.dark {
+  --surface: rgba(18, 28, 38, 0.82);
+  --surface-strong: #13202d;
+  --text: #ecf3fb;
+  --muted: #a8bacd;
+  --line: rgba(236, 243, 251, 0.1);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  background:
+    radial-gradient(circle at top left, rgba(42, 157, 143, 0.2), transparent 18%),
+    radial-gradient(circle at bottom right, rgba(231, 111, 81, 0.18), transparent 22%),
+    linear-gradient(180deg, #08111a 0%, #102133 100%);
 }
 
-li {
-    margin: 8px 0;
+.layout {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 42px 0 56px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.hero-copy,
+.hero-card,
+.todo-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.hero-copy,
+.hero-card {
+  padding: 30px;
+}
+
+.badge,
+.kicker {
+  display: inline-block;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.hero-copy h1 {
+  margin: 18px 0 14px;
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 1.06;
+}
+
+.hero-copy p,
+.hero-card p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+button,
+.link-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+button:hover,
+.link-button:hover {
+  transform: translateY(-1px);
+  background: var(--accent-dark);
+}
+
+.hero-card h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+pre {
+  margin: 18px 0 0;
+  min-height: 160px;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(12, 19, 29, 0.9);
+  color: #ddf7ff;
+  overflow: auto;
+}
+
+.todo-card {
+  margin-top: 24px;
+  padding: 28px;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.section-title h2 {
+  margin: 6px 0 0;
+}
+
+#contadorTarefas {
+  color: var(--muted);
+  margin: 0;
+}
+
+.task-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+}
+
+input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  color: var(--text);
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.task-item,
+.task-empty {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+}
+
+.task-empty {
+  justify-content: center;
+  color: var(--muted);
 }
 
 .btn-remover {
-    margin-left: 10px;
+  min-height: 40px;
+  padding-inline: 14px;
+  background: #b42318;
+}
+
+.btn-remover:hover {
+  background: #912018;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .layout {
+    width: min(100% - 24px, 100%);
+    padding: 24px 0 40px;
+  }
+
+  .task-form,
+  .section-title {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .hero-copy,
+  .hero-card,
+  .todo-card {
+    padding: 22px;
+  }
 }
